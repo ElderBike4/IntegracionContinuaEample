@@ -9,15 +9,15 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Construir y levantar el servidor
-                sh 'docker build -t operaciones-app .'
-                sh 'docker run -d -p 8080:80 operaciones-app'
+                // Construir y levantar el servidor en Windows
+                bat 'docker build -t operaciones-app .'
+                bat 'docker run -d -p 8080:80 operaciones-app'
             }
         }
         stage('Test') {
             steps {
-                // Ejecutar las pruebas automatizadas
-                sh 'python3 -m unittest tests/test_operations.py'
+                // Ejecutar las pruebas automatizadas en Windows
+                bat 'python -m unittest tests/test_operations.py'
             }
         }
         stage('Deploy') {
@@ -32,8 +32,8 @@ pipeline {
     }
     post {
         always {
-            // Limpieza del contenedor
-            sh 'docker stop $(docker ps -q)'
+            // Limpieza del contenedor en Windows
+            bat 'docker stop $(docker ps -q)'
         }
         success {
             echo 'Pipeline completado exitosamente.'
@@ -43,4 +43,3 @@ pipeline {
         }
     }
 }
-  
