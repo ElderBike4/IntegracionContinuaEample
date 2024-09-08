@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 // Ejecutar las pruebas automatizadas en Windows
-                bat 'python -m unittest tests/test_operations.py'
+                bat 'python -m unittest discover -s tests -p test_operations.py'
             }
         }
         stage('Deploy') {
