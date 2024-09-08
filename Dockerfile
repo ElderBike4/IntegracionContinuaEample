@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 # Copia el contenido de la carpeta 'src' a la carpeta predeterminada de Nginx
-COPY ./src /usr/share/nginx/html
+COPY ./src/web /usr/share/nginx/html
 
 # Expone el puerto 80
 EXPOSE 80
