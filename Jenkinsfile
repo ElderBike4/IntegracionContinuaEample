@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // Construir y levantar el servidor en Windows
                 bat 'docker build -t operaciones-app .'
-                bat 'docker run -d -p 8080:80 operaciones-app'
+                bat 'docker run -d -p 8081:80 operaciones-app'
             }
         }
         stage('Test') {
