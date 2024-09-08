@@ -1,18 +1,11 @@
-FROM node:14
+# Usa una imagen base de Nginx
+FROM nginx:alpine
 
-WORKDIR /app
+# Copia el contenido de la carpeta 'src' a la carpeta predeterminada de Nginx
+COPY ./src /usr/share/nginx/html
 
-# Copiar el archivo package.json y package-lock.json primero
-COPY package*.json ./
-
-# Instalar las dependencias
-RUN npm install
-
-# Copiar el resto del código de la aplicación
-COPY ./src /app
-
-# Exponer el puerto en el que la aplicación escucha
+# Expone el puerto 80
 EXPOSE 80
 
-# Comando para ejecutar la aplicación
-CMD ["npm", "start"]
+# Ejecuta el servidor Nginx en primer plano
+CMD ["nginx", "-g", "daemon off;"]
