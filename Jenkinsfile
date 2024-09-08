@@ -31,10 +31,6 @@ pipeline {
         }
     }
     post {
-        always {
-            // Limpieza del contenedor en Windows
-            bat 'docker stop $(docker ps -q)'
-        }
         success {
             echo 'Pipeline completado exitosamente.'
         }
