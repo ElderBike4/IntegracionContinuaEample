@@ -33,7 +33,7 @@ pipeline {
     post {
         always {
             // Limpieza del contenedor en Windows
-            bat 'docker stop $(docker ps -q)'
+            bat 'for /f "tokens=*" %i in ('docker ps -q') do docker stop %i'
         }
         success {
             echo 'Pipeline completado exitosamente.'
