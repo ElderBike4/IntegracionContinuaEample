@@ -46,15 +46,14 @@ pipeline {
                     echo "Contenedor encontrado con ID: ${containerId}"
 
                     // Detener el contenedor
-                    bat "docker stop ${containerId}"
+                    bat(script: "docker stop ${containerId}", returnStdout: true)
 
                     // Eliminar el contenedor
-                    bat "docker rm ${containerId}"
+                    bat(script: "docker rm ${containerId}", returnStdout: true)
                 } else {
                     echo "No se encontró ningún contenedor para la imagen 'operaciones-app'."
                 }
             }
         }
-
     }
 }
