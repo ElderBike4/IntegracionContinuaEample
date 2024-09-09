@@ -39,20 +39,7 @@ pipeline {
         }
         always {
             script {
-                // Buscar el ID del contenedor basado en la imagen
-                def containerId = bat(script: 'docker ps -a -q --filter "ancestor=operaciones-app"', returnStdout: true).trim()
-
-                if (containerId) {
-                    echo "Contenedor encontrado con ID: ${containerId}"
-
-                    // Detener el contenedor
-                    bat(script: "docker stop ${containerId}", returnStdout: true)
-
-                    // Eliminar el contenedor
-                    bat(script: "docker rm ${containerId}", returnStdout: true)
-                } else {
-                    echo "No se encontró ningún contenedor para la imagen 'operaciones-app'."
-                }
+                bat(script: './docker_commands.bat', returnStdout: true)
             }
         }
     }
