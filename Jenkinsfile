@@ -41,11 +41,13 @@ pipeline {
             script {
                 // Buscar el ID del contenedor basado en la imagen
                 def containerId = bat(script: 'docker ps -a -q --filter "ancestor=operaciones-app"', returnStdout: true).trim()
-                
+
                 if (containerId) {
-                    // Detener el contenedor si está corriendo
+                    echo "Contenedor encontrado con ID: ${containerId}"
+
+                    // Detener el contenedor
                     bat "docker stop ${containerId}"
-                    
+
                     // Eliminar el contenedor
                     bat "docker rm ${containerId}"
                 } else {
@@ -53,7 +55,5 @@ pipeline {
                 }
             }
         }
-
-
     }
 }
