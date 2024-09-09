@@ -1,5 +1,12 @@
 pipeline {
     agent any
+
+    environment {
+        DOCKER_IMAGE = 'operaciones-app'
+        TEST_IMAGE = 'python:3.12'
+        TEST_SCRIPT = './tests/tests_operations.py'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -7,29 +14,52 @@ pipeline {
                 git credentialsId: 'github-token', url: 'https://github.com/ElderBike4/IntegracionContinuaEample.git', branch: 'main'
             }
         }
+        
         stage('Build') {
             steps {
-                // Construir y levantar el servidor en Windows
-                bat 'docker build -t operaciones-app .'
-                bat 'docker run -d -p 8081:80 operaciones-app'
+                script {
+                    // Construir la imagen de Docker
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                }
             }
         }
-        stage('Test') {
+        
+        stage('Run Tests') {
             steps {
-                // Ejecutar las pruebas automatizadas en Windows
-                bat 'python ./tests/tests_operations.py'
+                script {
+                    // Ejecutar el contenedor auxiliar para pruebas
+                    def appContainer = docker.run("${DOCKER_IMAGE}", '-d -p 8081:80')
+
+                    // Esperar a que la aplicación esté disponible
+                    sleep(time: 30, unit: 'SECONDS')
+
+                    // Ejecutar las pruebas en un contenedor de prueba
+                    docker.image("${TEST_IMAGE}").inside {
+                        sh 'pip install selenium'
+                        sh "python ${TEST_SCRIPT}"
+                    }
+
+                    // Detener y eliminar el contenedor auxiliar después de las pruebas
+                    appContainer.stop()
+                    appContainer.remove()
+                }
             }
         }
+        
         stage('Deploy') {
             when {
                 expression { currentBuild.result == 'SUCCESS' }
             }
             steps {
-                // Desplegar la aplicación (puede ser un servidor o contenedor)
-                echo 'Desplegando la aplicación'
+                script {
+                    // Desplegar la aplicación en el contenedor oficial (o en el entorno de producción)
+                    echo 'Desplegando la aplicación'
+                    // Aquí puedes agregar comandos para desplegar la aplicación en el contenedor oficial
+                }
             }
         }
     }
+
     post {
         success {
             echo 'Pipeline completado exitosamente.'
