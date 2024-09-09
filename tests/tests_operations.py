@@ -26,6 +26,8 @@ class TestOperations(unittest.TestCase):
         # Probar suma
         self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Suma']"))).click()
         self.wait.until(EC.text_to_be_present_in_element((By.ID, 'resultado'), "15"))
+        num1.clear()
+        num2.clear()
 
     def test_resta(self):
         # Repetir la configuración para la resta
@@ -40,6 +42,8 @@ class TestOperations(unittest.TestCase):
         # Probar resta
         self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Resta']"))).click()
         self.wait.until(EC.text_to_be_present_in_element((By.ID, 'resultado'), "5"))
+        num1.clear()
+        num2.clear()
 
     def test_multiplicacion(self):
         # Repetir la configuración para la multiplicación
@@ -54,6 +58,8 @@ class TestOperations(unittest.TestCase):
         # Probar multiplicación
         self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Multiplicar']"))).click()
         self.wait.until(EC.text_to_be_present_in_element((By.ID, 'resultado'), "50"))
+        num1.clear()
+        num2.clear()
 
     @classmethod
     def tearDownClass(cls):
