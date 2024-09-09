@@ -7,12 +7,6 @@ pipeline {
                 git credentialsId: 'github-token', url: 'https://github.com/ElderBike4/IntegracionContinuaEample.git', branch: 'main'
             }
         }
-        stage('Build') {
-            steps {
-                // levantar el servidor en Windows
-                bat 'docker run -d -p 8081:80 --name operaciones-app operaciones-app'
-            }
-        }
         stage('Test') {
             steps {
                 // Ejecutar las pruebas automatizadas en Windows
