@@ -39,8 +39,18 @@ pipeline {
         }
         always {
             // Detener y eliminar el contenedor
-            bat 'docker stop operaciones-app || true'
-            bat 'docker rm operaciones-app || true'
+            script {
+                def containerId = bat(script: 'docker ps -a -q --filter "ancestor=operaciones-app"', returnStdout: true).trim()
+                if (containerId) {
+                    // Detener el contenedor si está corriendo
+                    bat "docker stop ${containerId} || true"
+                    // Eliminar el contenedor
+                    bat "docker rm ${containerId} || true"
+                } else {
+                    echo "No se encontró ningún contenedor para la imagen 'operaciones-app'."
+                }
+            }
         }
+
     }
 }
