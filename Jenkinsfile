@@ -45,6 +45,7 @@ pipeline {
                 if (containerId) {
                     // Detener el contenedor si está corriendo
                     bat "docker stop ${containerId}"
+                    
                     // Eliminar el contenedor
                     bat "docker rm ${containerId}"
                 } else {
