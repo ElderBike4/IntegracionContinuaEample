@@ -1,11 +1,17 @@
 function sumar() {
-    console.log('Suma no implementada');
+    var num1 = parseInt(document.getElementById('num1').value);
+    var num2 = parseInt(document.getElementById('num2').value);
+    document.getElementById('resultado').innerText = num1 + num2;
 }
 
 function restar() {
-    console.log('Resta no implementada');
+    var num1 = parseInt(document.getElementById('num1').value);
+    var num2 = parseInt(document.getElementById('num2').value);
+    document.getElementById('resultado').innerText = num1 - num2;
 }
 
 function multiplicar() {
-    console.log('Multiplicación no implementada');
+    var num1 = parseInt(document.getElementById('num1').value);
+    var num2 = parseInt(document.getElementById('num2').value);
+    document.getElementById('resultado').innerText = num1 * num2;
 }
